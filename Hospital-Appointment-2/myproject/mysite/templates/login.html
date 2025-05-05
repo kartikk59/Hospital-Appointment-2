@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Login Banner -->
+<div class="login-banner position-relative">
+    <div class="container">
+        <div class="banner-content py-5 text-center">
+            <h1 class="text-white mb-3">Login</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Login</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Login Section -->
+<section class="login-section py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Login Form -->
+            <div class="col-lg-6">
+                <div class="login-form-container bg-white p-4 rounded shadow-sm">
+                    <h2 class="mb-4">Login</h2>
+                    <form id="loginForm" class="login-form">
+                        {% csrf_token %}
+                        {% if next %}
+                        <input type="hidden" name="next" value="{{ next }}">
+                        {% endif %}
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                <label class="form-check-label" for="remember">Remember Me</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
+                        <p class="text-center mb-0">
+                            Don't have an account? 
+                            <a href="{% url 'register' %}" class="text-primary text-decoration-none">Register</a> Now.
+                        </p>
+                    </form>
+                    <div id="errorMessage" class="alert alert-danger d-none"></div>
+                </div>
+            </div>
+            <!-- Doctor Image -->
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="login-image">
+                    <img src="https://img.freepik.com/free-photo/woman-doctor-wearing-lab-coat-with-stethoscope-isolated_1303-29791.jpg" 
+                         alt="Doctor" 
+                         class="img-fluid rounded">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const remember = document.getElementById('remember').checked;
+    const next = document.querySelector('input[name="next"]')?.value;
+    const errorMessage = document.getElementById('errorMessage');
+    
+    try {
+        // Call Flask API
+        const response = await fetch('http://localhost:5000/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            // Store the JWT token
+            localStorage.setItem('jwt_token', data.token);
+            
+            // If remember me is checked, store the token in a cookie
+            if (remember) {
+                document.cookie = `jwt_token=${data.token}; path=/; max-age=86400`; // 24 hours
+            }
+            
+            // Submit the form to Django to handle session and redirect
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = window.location.pathname;
+            
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = 'csrfmiddlewaretoken';
+            csrfInput.value = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            form.appendChild(csrfInput);
+            
+            const emailInput = document.createElement('input');
+            emailInput.type = 'hidden';
+            emailInput.name = 'email';
+            emailInput.value = email;
+            form.appendChild(emailInput);
+            
+            const passwordInput = document.createElement('input');
+            passwordInput.type = 'hidden';
+            passwordInput.name = 'password';
+            passwordInput.value = password;
+            form.appendChild(passwordInput);
+            
+            const rememberInput = document.createElement('input');
+            rememberInput.type = 'hidden';
+            rememberInput.name = 'remember_me';
+            rememberInput.value = remember;
+            form.appendChild(rememberInput);
+            
+            if (next) {
+                const nextInput = document.createElement('input');
+                nextInput.type = 'hidden';
+                nextInput.name = 'next';
+                nextInput.value = next;
+                form.appendChild(nextInput);
+            }
+            
+            document.body.appendChild(form);
+            form.submit();
+        } else {
+            // Show error message
+            errorMessage.textContent = data.message || 'Login failed. Please check your credentials.';
+            errorMessage.classList.remove('d-none');
+        }
+    } catch (error) {
+        console.error('Login error:', error);
+        errorMessage.textContent = 'Unable to connect to the server. Please try again later.';
+        errorMessage.classList.remove('d-none');
+    }
+});
+</script>
+{% endblock %} 

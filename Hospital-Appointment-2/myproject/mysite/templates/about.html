@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="about-banner position-relative">
+    <div class="container">
+        <div class="banner-content py-5 text-center">
+            <h1 class="text-white mb-3">About Us</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">About Us</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<section class="about-section py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 mb-4 mb-lg-0">
+                <div class="about-content">
+                    <h2 class="mb-4">Welcome to HealCard</h2>
+                    <p class="lead mb-4">At HealCard, we are committed to providing exceptional healthcare services through our state-of-the-art facilities and experienced medical professionals.</p>
+                    
+                    <p class="mb-4">Our mission is to deliver high-quality, patient-centered healthcare services that promote wellness and improve the quality of life for our community. We believe in making healthcare accessible and convenient for everyone through our advanced appointment booking system.</p>
+                    
+                    <p class="mb-4">With a team of highly qualified doctors across various specialties, we ensure that you receive the best possible care. Our departments are equipped with modern technology and staffed by experienced healthcare professionals who are dedicated to your well-being.</p>
+                    
+                    <div class="key-features mt-5">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="feature d-flex align-items-start">
+                                    <i class="fas fa-user-md text-primary fa-2x me-3"></i>
+                                    <div>
+                                        <h4 class="h5">Expert Doctors</h4>
+                                        <p>Highly qualified and experienced medical professionals across all specialties.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature d-flex align-items-start">
+                                    <i class="fas fa-clock text-primary fa-2x me-3"></i>
+                                    <div>
+                                        <h4 class="h5">24/7 Support</h4>
+                                        <p>Round-the-clock medical assistance and emergency care services.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature d-flex align-items-start">
+                                    <i class="fas fa-hospital text-primary fa-2x me-3"></i>
+                                    <div>
+                                        <h4 class="h5">Modern Facilities</h4>
+                                        <p>State-of-the-art medical equipment and comfortable environment.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature d-flex align-items-start">
+                                    <i class="fas fa-calendar-check text-primary fa-2x me-3"></i>
+                                    <div>
+                                        <h4 class="h5">Easy Appointments</h4>
+                                        <p>Simple and convenient online appointment booking system.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="about-image text-center">
+                    <img src="https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5790.jpg" alt="Doctor" class="img-fluid rounded shadow-lg">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section bg-primary text-white py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h3 class="mb-4">Need Medical Assistance?</h3>
+                <p class="lead mb-4">Our team of experienced doctors is here to help you. Book an appointment today!</p>
+                <a href="{% url 'departments' %}" class="btn btn-light btn-lg">Book Appointment</a>
+                <div class="mt-4">
+                    <p class="h4 mb-0">Call Us: 9879879987</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

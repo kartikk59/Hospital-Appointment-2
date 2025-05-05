@@ -1,0 +1,36 @@
+# BASICS OF DJANGO:
+
+
+- its free and open source
+
+- If any framework is not made then we have to write every functiona;ity of web application and define a single and smallest thing. like every validations, every bars etc. Frameworks provide us features which make our work easy and short. It means they provide pre-built things to us so that we not have to write every single thing.
+
+- it provides us admin page which shows all the details about our web app. it provides an easy way to interact with the database. We can also interact with databases using low level database languages like sql. If our app is simple then we can directly use these low level languages. If its complex then using framework is a better way.
+
+- You can use programming languages like Python, Java, or PHP, along with their respective database libraries (e.g., psycopg2 for PostgreSQL in Python, JDBC for Java, PDO for PHP) to establish connections, execute queries, and manage data directly without relying on a framework.
+
+- Frameworks become more valuable when your application grows in complexity, requires complex data relationships, or benefits from features like ORM (Object-Relational Mapping), which can simplify database operations by mapping database tables to object classes. Django also provides ORM.
+
+- We can use CRUD operations in admin page by deleting or adding any user from the database.
+
+- its scalable and reliable, it follow code reusability principle.
+
+-GIt bash is a terminal which allows us to use linux commands. we can use cmd or git bash. git bash makes you familier with linux.
+
+- We create virtual env to make a space only for our project files. So, that it doesn't clash with other project files
+
+- BY making __init__ file in our folder we tell python that this folder is now a package and we can import other modules or functions also in it.
+
+wsgi = web server graphical interface
+asgi = asyncronoues server graphical interface
+setting = helps to add or remove configurations for our project
+
+- Debug = True in development server and FALSE in production server.
+In a production environment, debug=False is crucial for security and performance. Enabling debug mode (by setting debug=True) exposes detailed error pages, traceback information, and potentially sensitive settings, which is undesirable for user-facing applications. Additionally, debugging features can negatively impact performance and resource usage.
+When debug=False, Django no longer handles static files (CSS, JavaScript, images). Instead, a separate web server (like Apache, Nginx) is responsible for serving these files.
+Debug mode can slow down the application due to increased logging, tracing, and resource consumption. In a production environment, minimizing resource overhead is essential for optimal performance. 
+Debugging tools can add overhead to the application, which can lead to unnecessary resource usage and potential performance issues. 
+
+- ALLOWED_HOSTS = [] is blank on development server but in production server we have to put ip address or domain_name of our website in it so that our websote can run on this ip
+
+- 

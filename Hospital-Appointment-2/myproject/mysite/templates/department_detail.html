@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="department-banner position-relative">
+    <div class="container">
+        <div class="banner-content py-5 text-center">
+            <h1 class="text-white mb-3">{{ department.name }}</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'departments' %}" class="text-white">Departments</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">{{ department.name }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="department-icon mb-4">
+                    <i class="{{ department.icon }} fa-4x text-primary"></i>
+                </div>
+                <h2 class="mb-4">About {{ department.name }}</h2>
+                <p class="lead mb-5">{{ department.description }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="doctors-section py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Our Doctors</h2>
+        <div class="row g-4">
+            {% for doctor in department.doctors %}
+            <div class="col-md-6">
+                <div class="doctor-card">
+                    <div class="card shadow-sm">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <div class="doctor-img-container">
+                                    <div class="no-img-placeholder">
+                                        <i class="fas fa-user-md fa-3x text-secondary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h3 class="card-title h5 mb-2">{{ doctor.name }}</h3>
+                                    <p class="text-muted mb-2">{{ doctor.specialization }}</p>
+                                    <p class="card-text mb-2"><strong>Experience:</strong> {{ doctor.experience }}</p>
+                                    <p class="card-text mb-3"><strong>Qualifications:</strong><br>{{ doctor.qualifications }}</p>
+                                    <div class="d-flex gap-2">
+                                        <a href="{% url 'book_appointment' %}?doctor={{ doctor.id }}&department={{ department.slug }}" class="btn btn-primary btn-sm">Book Appointment</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %} 
