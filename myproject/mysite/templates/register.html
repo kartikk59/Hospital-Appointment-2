@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Register Banner -->
+<div class="register-banner position-relative">
+    <div class="container">
+        <div class="banner-content py-5 text-center">
+            <h1 class="text-white mb-3">Register</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Register</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Register Section -->
+<section class="register-section py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Register Form -->
+            <div class="col-lg-6">
+                <div class="register-form-container bg-white p-4 rounded shadow-sm">
+                    <h2 class="mb-4">Create Account</h2>
+                    {% if error %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
+                    <form method="POST" action="{% url 'register' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="age" class="form-label">Age</label>
+                            <input type="number" class="form-control" id="age" name="age" min="0" max="120" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gender" class="form-label">Gender</label>
+                            <select class="form-select" id="gender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control" id="address" name="address" rows="2" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm_password" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mb-3">Register</button>
+                        <p class="text-center mb-0">
+                            Already have an account? 
+                            <a href="{% url 'login' %}" class="text-primary text-decoration-none">Login</a> Now.
+                        </p>
+                    </form>
+                </div>
+            </div>
+            <!-- Doctor Image -->
+            <div class="col-lg-6 d-flex align-items-center justify-content-center mb-4 mb-lg-0">
+                <div class="register-image w-100 text-center">
+                    <img src="https://img.freepik.com/free-photo/woman-doctor-wearing-lab-coat-with-stethoscope-isolated_1303-29791.jpg" 
+                         alt="Doctor" 
+                         class="img-fluid rounded shadow" style="max-height: 400px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

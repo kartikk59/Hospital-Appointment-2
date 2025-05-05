@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Book Appointment Banner -->
+<div class="login-banner position-relative">
+    <div class="container">
+        <div class="banner-content py-5 text-center">
+            <h1 class="text-white mb-3">Book Appointment</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Book Appointment</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Book Appointment Section -->
+<section class="appointment-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Book Your Appointment</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Department</label>
+                                    <select class="form-select" name="department" required>
+                                        <option value="">Select Department</option>
+                                        {% for dept in departments %}
+                                        <option value="{{ dept.name }}">{{ dept.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Doctor</label>
+                                    <select class="form-select" name="doctor" required>
+                                        <option value="">Select Doctor</option>
+                                        {% for dept in departments %}
+                                        {% for doc in dept.doctors %}
+                                        <option value="{{ doc.name }}" data-department="{{ dept.name }}">{{ doc.name }} - {{ doc.specialization }}</option>
+                                        {% endfor %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Appointment Date</label>
+                                    <input type="date" class="form-control" name="date" required min="{{ today|date:'Y-m-d' }}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Preferred Time</label>
+                                    <select class="form-select" name="time" required>
+                                        <option value="">Select Time</option>
+                                        <option value="09:00:00">09:00 AM</option>
+                                        <option value="10:00:00">10:00 AM</option>
+                                        <option value="11:00:00">11:00 AM</option>
+                                        <option value="12:00:00">12:00 PM</option>
+                                        <option value="14:00:00">02:00 PM</option>
+                                        <option value="15:00:00">03:00 PM</option>
+                                        <option value="16:00:00">04:00 PM</option>
+                                        <option value="17:00:00">05:00 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="text-end mt-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-calendar-check me-1"></i> Book Appointment
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const departmentSelect = document.querySelector('select[name="department"]');
+    const doctorSelect = document.querySelector('select[name="doctor"]');
+    const doctors = Array.from(doctorSelect.options).slice(1);
+
+    departmentSelect.addEventListener('change', function() {
+        const selectedDepartment = this.value;
+        
+        // Reset doctor select
+        doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
+        
+        // Filter and add doctors for selected department
+        doctors.forEach(doctor => {
+            if (doctor.dataset.department === selectedDepartment) {
+                doctorSelect.add(doctor.cloneNode(true));
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
+{% endblock %} 

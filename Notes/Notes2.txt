@@ -1,0 +1,12 @@
+- pip freeze = gives all the packages and modules installed on my computer.
+- env_name/scripts/activate = command activate virtual env by running activate.bat file.
+- python -m venv env_name is used to create virtual env.
+- deactivate = deactivates the env
+- cd .. = get out from folder
+- django-admin startproject project_name = it creates your project folder and makes all boiler plate files.
+- code . = opens project folder in vs code 
+- python manage.py runserver = to start development server
+-python manage.py startapp <app_name> = to create new app.
+- python manage.py createsuperuser = to create super user
+- python manage.py changepassword <user_name> = to change pass
+- python manage.py makemigrations = to create tables.

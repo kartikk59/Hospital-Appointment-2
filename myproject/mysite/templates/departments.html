@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="department-banner position-relative">
+    <div class="container">
+        <div class="banner-content py-5 text-center">
+            <h1 class="text-white mb-3">Departments</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Departments</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<section class="departments-section py-5">
+    <div class="container">
+        <div class="row g-4">
+            {% for department in departments %}
+            <div class="col-md-6 col-lg-4">
+                <div class="department-card h-100">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="icon-box mb-4">
+                                <i class="{{ department.icon }} fa-3x text-primary"></i>
+                            </div>
+                            <h3 class="card-title h4 mb-3">{{ department.name }}</h3>
+                            <p class="card-text">{{ department.description|truncatewords:20 }}</p>
+                            <a href="{% url 'department_detail' department.slug %}" class="btn btn-primary mt-3">View Doctors</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %} 

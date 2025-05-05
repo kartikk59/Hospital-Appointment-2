@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="container mt-4">
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="welcome-section">
+                    <h2>Hello {{ user.first_name }} {{ user.last_name }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard-section py-4">
+        <div class="container">
+            <div class="row">
+                <!-- Quick Links Sidebar -->
+                <div class="col-lg-3">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="mb-4">Quick Links</h4>
+                            <div class="nav flex-column nav-pills">
+                                <a class="nav-link active" href="#appointments" data-bs-toggle="pill">
+                                    <i class="fas fa-calendar-check me-2"></i> My Appointments
+                                </a>
+                                <a class="nav-link" href="#profile" data-bs-toggle="pill">
+                                    <i class="fas fa-user me-2"></i> My Profile
+                                </a>
+                                <a class="nav-link" href="#support" data-bs-toggle="pill">
+                                    <i class="fas fa-question-circle me-2"></i> Support
+                                </a>
+                                <a class="nav-link text-danger" href="{% url 'logout' %}">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Log Out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="col-lg-9">
+                    <div class="tab-content">
+                        {% include "includes/dashboard_content.html" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% else %}
+<!-- Hero Section for Non-logged in Users -->
+<section class="hero-section position-relative" style="min-height: 90vh; background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80') center center/cover no-repeat;">
+    <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0, 40, 80, 0.65);"></div>
+    <div class="container h-100 position-relative" style="z-index:2;">
+        <div class="row align-items-center justify-content-center h-100">
+            <div class="col-lg-7 text-white text-center py-5">
+                <h1 class="display-4 fw-bold mb-3">Welcome to HealCard</h1>
+                <p class="lead mb-4">Book your appointments with top doctors easily and efficiently. Your health, our priority.</p>
+                <div class="mt-4">
+                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg me-3 shadow">Login</a>
+                    <a href="{% url 'register' %}" class="btn btn-outline-light btn-lg shadow">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+.hero-section {
+    position: relative;
+    overflow: hidden;
+}
+.hero-section .hero-overlay {
+    pointer-events: none;
+}
+</style>
+{% endif %}
+{% endblock %} 
